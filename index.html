@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Akshay Sudheer — Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy: #0b1120;
+    --navy-mid: #131d32;
+    --navy-soft: #1c2a46;
+    --amber: #f5a623;
+    --amber-dim: #c47f10;
+    --off-white: #eae8e0;
+    --muted: #8a96ae;
+    --divider: rgba(255,255,255,0.07);
+    --font-display: 'Playfair Display', serif;
+    --font-body: 'DM Sans', sans-serif;
+    --font-mono: 'DM Mono', monospace;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--navy);
+    color: var(--off-white);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1rem 3rem;
+    background: rgba(11,17,32,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--divider);
+  }
+
+  .nav-logo {
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    color: var(--off-white);
+    letter-spacing: 0.02em;
+  }
+
+  .nav-logo span { color: var(--amber); }
+
+  .nav-actions { display: flex; align-items: center; gap: 0.75rem; }
+
+  .btn {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    font-family: var(--font-body);
+    font-size: 0.8125rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 0.5rem 1.25rem;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .btn-outline {
+    color: var(--off-white);
+    border: 1px solid rgba(234,232,224,0.3);
+    background: transparent;
+  }
+  .btn-outline:hover {
+    border-color: var(--amber);
+    color: var(--amber);
+  }
+
+  .btn-amber {
+    color: var(--navy);
+    background: var(--amber);
+    border: 1px solid var(--amber);
+    font-weight: 600;
+  }
+  .btn-amber:hover {
+    background: var(--amber-dim);
+    border-color: var(--amber-dim);
+  }
+
+  .btn svg { width: 14px; height: 14px; }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex; align-items: center;
+    padding: 7rem 3rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-grid-bg {
+    position: absolute; inset: 0; z-index: 0;
+    background-image:
+      linear-gradient(var(--divider) 1px, transparent 1px),
+      linear-gradient(90deg, var(--divider) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse 80% 80% at 50% 40%, black 30%, transparent 100%);
+  }
+
+  .hero-accent {
+    position: absolute; top: 20%; right: 5%;
+    width: 360px; height: 360px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(245,166,35,0.08) 0%, transparent 70%);
+    z-index: 0;
+  }
+
+  .hero-content { position: relative; z-index: 1; max-width: 760px; }
+
+  .hero-tag {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--amber);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 1.25rem;
+    padding: 0.25rem 0.75rem;
+    border: 1px solid rgba(245,166,35,0.3);
+    border-radius: 2px;
+  }
+
+  .hero h1 {
+    font-family: var(--font-display);
+    font-size: clamp(2.8rem, 6vw, 4.5rem);
+    font-weight: 700;
+    line-height: 1.1;
+    color: var(--off-white);
+    margin-bottom: 1.5rem;
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    color: var(--amber);
+  }
+
+  .hero-summary {
+    font-size: 1.0625rem;
+    color: var(--muted);
+    max-width: 580px;
+    margin-bottom: 2.5rem;
+    line-height: 1.8;
+  }
+
+  .hero-pills { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+
+  .pill {
+    font-size: 0.75rem;
+    font-family: var(--font-mono);
+    letter-spacing: 0.04em;
+    color: var(--muted);
+    padding: 0.3rem 0.8rem;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--divider);
+    border-radius: 20px;
+  }
+
+  .scroll-hint {
+    position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+    font-size: 0.7rem; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase;
+    z-index: 1;
+    animation: bounce 2s infinite;
+  }
+
+  .scroll-hint::after {
+    content: '';
+    display: block; width: 1px; height: 40px;
+    background: linear-gradient(to bottom, var(--amber), transparent);
+  }
+
+  @keyframes bounce {
+    0%,100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(6px); }
+  }
+
+  /* SECTIONS */
+  section { padding: 5rem 3rem; }
+
+  .section-label {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--amber);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+  }
+
+  .section-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.8rem, 3.5vw, 2.75rem);
+    font-weight: 700;
+    color: var(--off-white);
+    margin-bottom: 3rem;
+    max-width: 640px;
+  }
+
+  /* ABOUT strip */
+  .about-inner {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 4rem;
+    max-width: 1100px; margin: 0 auto;
+  }
+
+  .about-text p { color: var(--muted); margin-bottom: 1rem; font-size: 0.9375rem; }
+
+  .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+
+  .stat-card {
+    padding: 1.5rem;
+    background: var(--navy-mid);
+    border: 1px solid var(--divider);
+    border-radius: 4px;
+    border-left: 3px solid var(--amber);
+  }
+
+  .stat-card .num {
+    font-family: var(--font-display);
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--amber);
+    line-height: 1;
+    margin-bottom: 0.25rem;
+  }
+
+  .stat-card .lbl {
+    font-size: 0.78rem;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  /* SKILLS */
+  .skills-section { background: var(--navy-mid); }
+
+  .skills-inner { max-width: 1100px; margin: 0 auto; }
+
+  .skill-groups { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; }
+
+  .skill-group {
+    padding: 1.75rem;
+    background: var(--navy);
+    border: 1px solid var(--divider);
+    border-radius: 4px;
+  }
+
+  .skill-group-title {
+    font-size: 0.7rem;
+    font-family: var(--font-mono);
+    color: var(--amber);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--divider);
+  }
+
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 0.45rem; }
+
+  .skill-tag {
+    font-size: 0.75rem;
+    color: var(--off-white);
+    padding: 0.3rem 0.7rem;
+    background: rgba(245,166,35,0.07);
+    border: 1px solid rgba(245,166,35,0.2);
+    border-radius: 2px;
+  }
+
+  /* EXPERIENCE */
+  .exp-section { max-width: 1100px; margin: 0 auto; }
+
+  .exp-item {
+    display: grid; grid-template-columns: 200px 1fr;
+    gap: 2rem; padding: 2.5rem 0;
+    border-bottom: 1px solid var(--divider);
+  }
+  .exp-item:last-child { border-bottom: none; }
+
+  .exp-meta .company {
+    font-size: 0.8rem;
+    font-family: var(--font-mono);
+    color: var(--amber);
+    letter-spacing: 0.06em;
+    margin-bottom: 0.3rem;
+  }
+
+  .exp-meta .period {
+    font-size: 0.75rem;
+    color: var(--muted);
+  }
+
+  .exp-role {
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--off-white);
+    margin-bottom: 0.75rem;
+  }
+
+  .exp-detail {
+    list-style: none; padding: 0;
+  }
+
+  .exp-detail li {
+    font-size: 0.875rem;
+    color: var(--muted);
+    padding: 0.3rem 0;
+    padding-left: 1.1rem;
+    position: relative;
+  }
+
+  .exp-detail li::before {
+    content: '▸';
+    position: absolute; left: 0;
+    color: var(--amber); font-size: 0.65rem; top: 0.45rem;
+  }
+
+  /* CERTS */
+  .certs-section { background: var(--navy-mid); }
+  .certs-inner { max-width: 1100px; margin: 0 auto; }
+
+  .certs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.25rem; }
+
+  .cert-card {
+    display: flex; align-items: flex-start; gap: 1rem;
+    padding: 1.25rem 1.5rem;
+    background: var(--navy);
+    border: 1px solid var(--divider);
+    border-radius: 4px;
+    transition: border-color 0.2s ease;
+  }
+
+  .cert-card:hover { border-color: rgba(245,166,35,0.4); }
+
+  .cert-icon {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: rgba(245,166,35,0.1);
+    border: 1px solid rgba(245,166,35,0.25);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    font-size: 0.875rem;
+    color: var(--amber);
+    font-weight: 700;
+    font-family: var(--font-mono);
+  }
+
+  .cert-name {
+    font-size: 0.875rem;
+    color: var(--off-white);
+    font-weight: 500;
+    line-height: 1.4;
+  }
+
+  /* EDUCATION */
+  .edu-grid { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+
+  .edu-card {
+    padding: 2rem;
+    background: var(--navy-mid);
+    border: 1px solid var(--divider);
+    border-radius: 4px;
+    position: relative; overflow: hidden;
+  }
+
+  .edu-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: var(--amber);
+  }
+
+  .edu-degree {
+    font-family: var(--font-display);
+    font-size: 1.125rem; font-weight: 700;
+    color: var(--off-white); margin-bottom: 0.4rem;
+  }
+
+  .edu-school {
+    font-size: 0.875rem; color: var(--amber);
+    font-family: var(--font-mono); margin-bottom: 0.25rem;
+  }
+
+  .edu-year { font-size: 0.8rem; color: var(--muted); }
+
+  /* CONTACT */
+  .contact-section {
+    text-align: center;
+    padding: 5rem 3rem 6rem;
+    position: relative; overflow: hidden;
+  }
+
+  .contact-section::before {
+    content: '';
+    position: absolute; inset: 0; z-index: 0;
+    background: radial-gradient(ellipse 60% 60% at 50% 100%, rgba(245,166,35,0.06) 0%, transparent 70%);
+  }
+
+  .contact-section > * { position: relative; z-index: 1; }
+
+  .contact-email {
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 3vw, 2.5rem);
+    color: var(--off-white);
+    text-decoration: none;
+    display: inline-block;
+    margin: 1.5rem 0 0.5rem;
+    transition: color 0.2s;
+  }
+  .contact-email:hover { color: var(--amber); }
+
+  .contact-sub { font-size: 0.875rem; color: var(--muted); margin-bottom: 2rem; }
+
+  .contact-links { display: flex; justify-content: center; gap: 1rem; }
+
+  /* FOOTER */
+  footer {
+    text-align: center;
+    padding: 1.5rem 3rem;
+    border-top: 1px solid var(--divider);
+    font-size: 0.78rem;
+    color: var(--muted);
+    font-family: var(--font-mono);
+    letter-spacing: 0.06em;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.25rem; }
+    .nav-logo { font-size: 1rem; }
+    .btn { font-size: 0.7rem; padding: 0.4rem 0.875rem; }
+    section { padding: 3.5rem 1.25rem; }
+    .hero { padding: 6rem 1.25rem 4rem; }
+    .about-inner, .edu-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .exp-item { grid-template-columns: 1fr; gap: 0.5rem; }
+    .stats-grid { grid-template-columns: 1fr 1fr; }
+  }
+
+  /* Fade-in on scroll */
+  .fade-up {
+    opacity: 0; transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .fade-up.visible { opacity: 1; transform: translateY(0); }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Akshay<span>.</span></div>
+  <div class="nav-actions">
+    <a href="https://github.com/akshayts" target="_blank" rel="noopener" class="btn btn-outline">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77A5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+      Projects
+    </a>
+    <a href="Akshay_Sudheer_Resume.pdf" download class="btn btn-amber">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      Resume
+    </a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grid-bg"></div>
+  <div class="hero-accent"></div>
+  <div class="hero-content">
+    <div class="hero-tag">Open to opportunities</div>
+    <h1>Data-Driven<br><em>Business Analyst</em><br>&amp; Ex-Developer</h1>
+    <p class="hero-summary">
+      Senior executive with 4+ years in sales enablement, pipeline analytics, and partner ecosystems — backed by 3 years building enterprise software at Cognizant. I turn messy data into decisions that matter.
+    </p>
+    <div class="hero-pills">
+      <span class="pill">Power BI</span>
+      <span class="pill">HubSpot Analytics</span>
+      <span class="pill">Python · Pandas</span>
+      <span class="pill">SQL</span>
+      <span class="pill">Excel Power Query</span>
+      <span class="pill">GTM Strategy</span>
+      <span class="pill">Pipeline Visibility</span>
+      <span class="pill">Cloud Ecosystems</span>
+    </div>
+  </div>
+  <div class="scroll-hint">scroll</div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-inner">
+    <div class="about-text fade-up">
+      <div class="section-label">About me</div>
+      <div class="section-title" style="font-size: 2rem; margin-bottom: 1.5rem;">Analyst by instinct,<br>Engineer by training.</div>
+      <p>
+        I'm Akshay Sudheer, based in Bengaluru — an MBA in Business Analytics who started as a full-stack developer and found my groove at the intersection of data, partnerships, and go-to-market strategy.
+      </p>
+      <p>
+        At Mindsprint, I manage Global Partner Ecosystem data in HubSpot with 98%+ accuracy, build Power BI dashboards tracking sales KPIs, and collaborate with cross-functional teams to improve pipeline visibility and execution.
+      </p>
+      <p>
+        Before that, I spent 3 years at Cognizant building Java/Eclipse RCP enterprise tooling, running CI/CD pipelines, and contributing to open-source Hadoop/HBase — which gives me an unusual technical depth for a business analyst.
+      </p>
+    </div>
+    <div class="stats-grid fade-up">
+      <div class="stat-card">
+        <div class="num">7+</div>
+        <div class="lbl">Years experience</div>
+      </div>
+      <div class="stat-card">
+        <div class="num">98%</div>
+        <div class="lbl">Data accuracy, HubSpot GPE</div>
+      </div>
+      <div class="stat-card">
+        <div class="num">30+</div>
+        <div class="lbl">Production RCAs resolved</div>
+      </div>
+      <div class="stat-card">
+        <div class="num">25+</div>
+        <div class="lbl">HealthTech firms profiled</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section class="skills-section" id="skills">
+  <div class="skills-inner">
+    <div class="section-label fade-up">What I work with</div>
+    <div class="section-title fade-up">Technical Toolkit</div>
+    <div class="skill-groups">
+      <div class="skill-group fade-up">
+        <div class="skill-group-title">Data Analysis &amp; BI</div>
+        <div class="skill-tags">
+          <span class="skill-tag">Excel (Power Query)</span>
+          <span class="skill-tag">Pivot Tables</span>
+          <span class="skill-tag">Power BI</span>
+          <span class="skill-tag">Tableau</span>
+          <span class="skill-tag">SQL</span>
+          <span class="skill-tag">Google Analytics</span>
+          <span class="skill-tag">Statistical Analysis</span>
+          <span class="skill-tag">Data Visualization</span>
+        </div>
+      </div>
+      <div class="skill-group fade-up">
+        <div class="skill-group-title">Programming &amp; Engineering</div>
+        <div class="skill-tags">
+          <span class="skill-tag">Python</span>
+          <span class="skill-tag">Pandas · NumPy</span>
+          <span class="skill-tag">Web Scraping</span>
+          <span class="skill-tag">Java</span>
+          <span class="skill-tag">Git</span>
+          <span class="skill-tag">Jenkins CI/CD</span>
+          <span class="skill-tag">Hadoop · HBase</span>
+        </div>
+      </div>
+      <div class="skill-group fade-up">
+        <div class="skill-group-title">Business Analytics</div>
+        <div class="skill-tags">
+          <span class="skill-tag">KPI Development</span>
+          <span class="skill-tag">Pipeline Analytics</span>
+          <span class="skill-tag">Market Research</span>
+          <span class="skill-tag">Competitive Intel</span>
+          <span class="skill-tag">A/B Testing</span>
+          <span class="skill-tag">Forecasting</span>
+          <span class="skill-tag">SWOT Analysis</span>
+          <span class="skill-tag">Stakeholder Reporting</span>
+        </div>
+      </div>
+      <div class="skill-group fade-up">
+        <div class="skill-group-title">CRM &amp; Platforms</div>
+        <div class="skill-tags">
+          <span class="skill-tag">HubSpot Analytics</span>
+          <span class="skill-tag">Azure AI</span>
+          <span class="skill-tag">AWS Partner</span>
+          <span class="skill-tag">JIRA</span>
+          <span class="skill-tag">Eclipse RCP</span>
+          <span class="skill-tag">GTM Enablement</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div style="max-width:1100px; margin:0 auto;">
+    <div class="section-label fade-up">Where I've worked</div>
+    <div class="section-title fade-up">Experience</div>
+    <div class="exp-section">
+
+      <div class="exp-item fade-up">
+        <div class="exp-meta">
+          <div class="company">Mindsprint</div>
+          <div class="period">Sep 2024 – Present<br>Bengaluru</div>
+        </div>
+        <div class="exp-detail-wrap">
+          <div class="exp-role">Sr. Executive – Global Partnerships</div>
+          <ul class="exp-detail">
+            <li>Managed Global Partner Ecosystem pipeline data in HubSpot with >98% accuracy; structured datasets for forecasting and pipeline visibility.</li>
+            <li>Designed Power BI dashboards and Excel (Power Query, Pivot) reports tracking pipeline value, deal stages, and conversion rates.</li>
+            <li>Supported partner onboarding, solution marketplace listings, and GTM enablement across cloud ecosystems — 100% SLA adherence.</li>
+            <li>Evaluated partner certifications, conducted portal audits, and generated insights for tier progression and customer success outcomes.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="exp-item fade-up">
+        <div class="exp-meta">
+          <div class="company">Remotcare</div>
+          <div class="period">Jun – Aug 2023<br>Bengaluru</div>
+        </div>
+        <div class="exp-detail-wrap">
+          <div class="exp-role">Business Research &amp; Analyst Intern</div>
+          <ul class="exp-detail">
+            <li>Profiled 25+ HealthTech firms using Python web scraping, Excel, and Power BI; delivered BI dashboards and competitive benchmarking.</li>
+            <li>Analyzed 10+ digital health products across revenue models, user adoption, and market positioning with SWOT insights to refine GTM strategy.</li>
+            <li>Recommended growth strategies projected to improve subscriptions by 20% via user segmentation and privacy-first onboarding.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="exp-item fade-up">
+        <div class="exp-meta">
+          <div class="company">Cognizant</div>
+          <div class="period">Nov 2017 – Mar 2021<br>Bengaluru</div>
+        </div>
+        <div class="exp-detail-wrap">
+          <div class="exp-role">Associate – Projects</div>
+          <ul class="exp-detail">
+            <li>Developed Java/Eclipse RCP enterprise SQL database client (2,500+ LOC) supporting query execution, BLOB/CLOB visualization, and DBMS job management.</li>
+            <li>Automated regression testing via Jenkins CI pipelines, reducing failures by 20% and improving release reliability.</li>
+            <li>Resolved 30+ production RCAs by analyzing query performance and system logs; verified 100+ JIRA issues.</li>
+            <li>Contributed 4 open-source fixes in Hadoop/HBase; increased test coverage to 80%+.</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CERTIFICATIONS -->
+<section class="certs-section" id="certifications">
+  <div class="certs-inner">
+    <div class="section-label fade-up">Credentials</div>
+    <div class="section-title fade-up">Certifications</div>
+    <div class="certs-grid">
+      <div class="cert-card fade-up">
+        <div class="cert-icon">XL</div>
+        <div class="cert-name">Excel Power Tools for Data Analysis</div>
+      </div>
+      <div class="cert-card fade-up">
+        <div class="cert-icon">AZ</div>
+        <div class="cert-name">Microsoft Azure AI Essentials</div>
+      </div>
+      <div class="cert-card fade-up">
+        <div class="cert-icon">AW</div>
+        <div class="cert-name">AWS Partner: Sales Accreditation</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div style="max-width:1100px; margin:0 auto;">
+    <div class="section-label fade-up">Academic background</div>
+    <div class="section-title fade-up">Education</div>
+    <div class="edu-grid">
+      <div class="edu-card fade-up">
+        <div class="edu-degree">MBA – Business Analytics</div>
+        <div class="edu-school">Amrita School of Business</div>
+        <div class="edu-year">Bengaluru · 2022 – 2024</div>
+      </div>
+      <div class="edu-card fade-up">
+        <div class="edu-degree">B.Tech – Electronics &amp; Communications Engineering</div>
+        <div class="edu-school">Amrita School of Engineering</div>
+        <div class="edu-year">Coimbatore · 2013 – 2017</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact-section" id="contact">
+  <div class="section-label">Let's connect</div>
+  <div class="section-title" style="margin: 0 auto; text-align:center;">Have a project or role in mind?</div>
+  <a href="mailto:akshaysudheert@gmail.com" class="contact-email">akshaysudheert@gmail.com</a>
+  <p class="contact-sub">+91-9597123586 · Bengaluru, Karnataka</p>
+  <div class="contact-links">
+    <a href="https://linkedin.com/in/akshayts" target="_blank" rel="noopener" class="btn btn-outline">
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+      LinkedIn
+    </a>
+    <a href="https://github.com/akshayts" target="_blank" rel="noopener" class="btn btn-outline">
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77A5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+      GitHub
+    </a>
+    <a href="Akshay_Sudheer_Resume.pdf" download class="btn btn-amber">
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      Download Resume
+    </a>
+  </div>
+</section>
+
+<footer>
+  Akshay Sudheer · Bengaluru, India · Built with HTML &amp; CSS
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
